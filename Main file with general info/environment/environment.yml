@@ -8,5 +8,6 @@ dependencies:
   - pandas
   - flask
   - pip
+  - transformers
   - pip:
     - requests
