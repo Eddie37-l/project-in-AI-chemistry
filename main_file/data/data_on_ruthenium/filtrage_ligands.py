@@ -4,7 +4,9 @@ from rdkit.Chem import Descriptors
 from collections import Counter
 
 # === Charger le fichier CSV ===
-file_path = "Ligand_candidates.csv"  # Assure-toi que ce fichier est dans le même dossier que ce script
+file_path = "c:/Users/wpell/python-course/projects/project-in-AI-chemistry/project-in-AI-chemistry/main_file/data/data_on_ruthenium/Ligand_candidates.csv"
+
+#file_path = "Ligand_candidates.csv"  Assure-toi que ce fichier est dans le même dossier que ce script
 df = pd.read_csv(file_path)
 
 # === Fonction pour calculer la masse molaire ===
