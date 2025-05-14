@@ -1,5 +1,5 @@
 import pandas as pd
-from tokenizer import smi_tokenizer
+from schwaller_tokenizer import smi_tokenizer
 
 # Function security
 def safe_tokenizer(smi):
@@ -25,4 +25,4 @@ df['tokenized_substrate'] = df['Substrate_SMILES'].apply(safe_tokenizer)
 print(df[['Ligand_SMILES', 'tokenized_ligand', 'Substrate_SMILES', 'tokenized_substrate', 'Yield']].head())
 
 # Sauvegarder dans un nouveau fichier
-# df.to_csv("data/data_hydrogenation_tokenized.csv", index=False)
+df.to_csv("data/data_on_ruthenium/data_hydrogenation_tokenized.csv", index=False)
