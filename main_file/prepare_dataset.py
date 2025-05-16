@@ -1,10 +1,10 @@
 import pandas as pd
 
 # charge the database with the SMILES
-df = pd.read_csv("data/data_on_ruthenium/data_hydrogenation.csv")
+df = pd.read_csv("../data_smiles/filtered_smiles_similar.csv")
 
 # keep only the ligand column
-ligands = df['Ligand_SMILES'].dropna()
+ligands = df['smiles'].dropna()
 
 # Save the file
 with open("data/ligands_raw.txt", "w") as f:
