@@ -49,7 +49,7 @@ def nettoyer_et_filtrer(mol):
         symbol = atom.GetSymbol()
         atom_counts[symbol] = atom_counts.get(symbol, 0) + 1
 
-    if 50 <= mw <= 500 and atom_counts.get("P", 0) >= 1 and atom_counts.get("N", 0) >= 1:
+    if 50 <= mw <= 600 and atom_counts.get("P", 0) >= 1 and atom_counts.get("N", 0) >= 1:
         return Chem.MolToSmiles(mol)
     return None
 
