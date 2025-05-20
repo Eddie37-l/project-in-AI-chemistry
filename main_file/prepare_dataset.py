@@ -7,7 +7,7 @@ df = pd.read_csv("../data_smiles/filtered_smiles_similar.csv")
 ligands = df['smiles'].dropna()
 
 # Save the file
-with open("data/ligands_raw.txt", "w") as f:
+with open("data/filtred_ligands_raw.txt", "w") as f:
     for ligand in ligands:
         f.write(ligand.strip() + "\n")
 
