@@ -9,27 +9,27 @@ from transformers import (
     RobertaForMaskedLM,
     Trainer,
     TrainingArguments,
+    DataCollatorForLanguageModeling
 )
 
 # ----------- arguments CLI --------------------------------------
 parser = argparse.ArgumentParser()
 parser.add_argument("--dataset_dir", required=True,
                     help="Dossier qui contient le sous-dossier test/ sauvegardé par datasets.save_to_disk()")
-parser.add_argument("--model_dir",   required=True,
+parser.add_argument("--model_dir", required=True,
                     help="Dossier du modèle pré-entraîné (config, tokenizer, poids)")
-parser.add_argument("--batch_size",  type=int, default=8,
+parser.add_argument("--batch_size", type=int, default=8,
                     help="Taille de batch pour l’évaluation")
-parser.add_argument("--output_dir",  default="output/test_eval",
+parser.add_argument("--output_dir", default="output/test_eval",
                     help="Où écrire les logs locaux (pas le modèle)")
 parser.add_argument("--wandb_project", default=None,
                     help="Nom de projet W&B si tu veux logger (laisser vide pour désactiver)")
 args = parser.parse_args()
 
-
 # ----------- chargement modèle + tokenizer ----------------------
 print("🔹 Loading model & tokenizer…")
 tokenizer = RobertaTokenizerFast.from_pretrained(args.model_dir)
-model     = RobertaForMaskedLM.from_pretrained(args.model_dir)
+model = RobertaForMaskedLM.from_pretrained(args.model_dir)
 
 device = torch.device(
     "cuda" if torch.cuda.is_available()
@@ -45,10 +45,12 @@ print(f"🔹 Loading test set from {test_path} …")
 ds_test = load_from_disk(test_path)
 print(f"✅ Test set size : {len(ds_test)}")
 
-# ----------- ajout labels s’ils n’existent pas ------------------
-if "labels" not in ds_test.column_names:
-    print("🛠  Adding 'labels' column for loss computation …")
-    ds_test = ds_test.map(lambda ex: {"labels": ex["input_ids"]})
+# ----------- data collator avec masquage dynamique --------------
+data_collator = DataCollatorForLanguageModeling(
+    tokenizer=tokenizer,
+    mlm=True,
+    mlm_probability=0.15,
+)
 
 # ----------- TrainingArguments (éval uniquement) ----------------
 eval_args = TrainingArguments(
@@ -56,14 +58,19 @@ eval_args = TrainingArguments(
     per_device_eval_batch_size=args.batch_size,
     do_train=False,
     do_eval=True,
+    report_to="none",  # tu peux mettre "wandb" ici si tu veux logguer
 )
 
 # ----------- Trainer et évaluation ------------------------------
-trainer = Trainer(model=model, args=eval_args, tokenizer=tokenizer)
+trainer = Trainer(
+    model=model,
+    args=eval_args,
+    tokenizer=tokenizer,
+    data_collator=data_collator,
+)
 
 print("🚀 Evaluating on test set …")
 metrics = trainer.evaluate(eval_dataset=ds_test)
-# metrics contient normalement 'eval_loss'
 
 eval_loss = metrics.get("eval_loss")
 if eval_loss is None:
