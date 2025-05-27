@@ -1,0 +1,48 @@
+{
+  "builder_name": "text",
+  "citation": "",
+  "config_name": "default",
+  "dataset_name": "text",
+  "dataset_size": 975453,
+  "description": "",
+  "download_checksums": {
+    "/Users/thomas/Desktop/Master EPFL/2nd semester/AI for chemistry/Project/main_file/data/filtred_ligands_raw.txt": {
+      "num_bytes": 924582,
+      "checksum": null
+    }
+  },
+  "download_size": 924582,
+  "features": {
+    "input_ids": {
+      "feature": {
+        "dtype": "int32",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    },
+    "attention_mask": {
+      "feature": {
+        "dtype": "int8",
+        "_type": "Value"
+      },
+      "_type": "Sequence"
+    }
+  },
+  "homepage": "",
+  "license": "",
+  "size_in_bytes": 1900035,
+  "splits": {
+    "train": {
+      "name": "train",
+      "num_bytes": 975453,
+      "num_examples": 16957,
+      "dataset_name": "text"
+    }
+  },
+  "version": {
+    "version_str": "0.0.0",
+    "major": 0,
+    "minor": 0,
+    "patch": 0
+  }
+}
