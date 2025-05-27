@@ -9,19 +9,19 @@ from datasets import load_from_disk, DatasetDict
 # ----------------------------
 parser = argparse.ArgumentParser()
 parser.add_argument("--dataset_dir", type=str, required=True, help="datasets 'train' and 'val'")
-parser.add_argument("--output_dir", type=str, default="output/chemberta-mlm2", help="results' output")
-parser.add_argument("--save_dir", type=str, default="models/chemberta-mlm-custom2", help="where to save the model")
-parser.add_argument("--batch_size", type=int, default=4, help="batch size")
-parser.add_argument("--epochs", type=int, default=3, help="epochs number")
+parser.add_argument("--output_dir", type=str, default="output/chemberta-mlm3", help="results' output")
+parser.add_argument("--save_dir", type=str, default="models/chemberta-mlm-custom3", help="where to save the model")
+parser.add_argument("--batch_size", type=int, default=32, help="batch size")
+parser.add_argument("--epochs", type=int, default=5, help="epochs number")
 parser.add_argument("--save_steps", type=int, default=500, help="checkpoint/save frequency in steps")
-parser.add_argument("--learning_rate", type=float, default=5e-5, help="learning rate")
+parser.add_argument("--learning_rate", type=float, default=3e-5, help="learning rate")
 parser.add_argument("--gradient_accumulation_steps", type=int, default=1, help="number of steps for gradient accumulation")
 args = parser.parse_args()
 
 # ----------------------------
 # Init WandB
 # ----------------------------
-wandb.init(project="chemberta-pretraining2", name="ChemBERTa MLM Custom2")
+wandb.init(project="chemberta-pretraining3", name="ChemBERTa MLM Custom3")
 
 # ----------------------------
 # Load tokenizer and model
@@ -83,7 +83,7 @@ training_args = TrainingArguments(
     load_best_model_at_end=True,
     save_strategy="steps",
     report_to=["wandb"],
-    run_name= "ChemBERTa MLM Custom2",
+    run_name= "ChemBERTa MLM Custom3",
 )
 
 # ----------------------------

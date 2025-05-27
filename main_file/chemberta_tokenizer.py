@@ -25,7 +25,7 @@ print(f"Test: {len(test_dataset)} examples")
 
 # Tokenization function with padding + truncation
 def tokenize_function(examples):
-    return tokenizer(examples["text"], truncation=True, padding="max_length", max_length=128)
+    return tokenizer(examples["text"], truncation=True, padding="max_length", max_length=90)
 
 # Tokenization of each set
 tokenized_train_dataset = train_dataset.map(tokenize_function, batched=True, remove_columns=["text"])
@@ -33,8 +33,8 @@ tokenized_val_dataset = val_dataset.map(tokenize_function, batched=True, remove_
 tokenized_test_dataset = test_dataset.map(tokenize_function, batched=True, remove_columns=["text"])
 
 # Save each tokenized set
-tokenized_train_dataset.save_to_disk("data/tok_lig_pretraining2/train")
-tokenized_val_dataset.save_to_disk("data/tok_lig_pretraining2/val")
-tokenized_test_dataset.save_to_disk("data/tok_lig_pretraining2/test")
+tokenized_train_dataset.save_to_disk("data/tok_lig_pretraining3/train")
+tokenized_val_dataset.save_to_disk("data/tok_lig_pretraining3/val")
+tokenized_test_dataset.save_to_disk("data/tok_lig_pretraining3/test")
 
 print("Dataset tokenized and saved.")
