@@ -10,41 +10,41 @@ output_dir = "data_smiles"
 output_csv_file = os.path.join(output_dir, "filtered_smiles_similar.csv")
 input_csv_file = os.path.join(output_dir, "Cross_Coupling_Smiles.csv")
 
-metaux_a_supprimer = {"Ag", "Cu", "Au", "Ni", "Pd", "Pt"}
+metals_to_remove = {"Ag", "Cu", "Au", "Ni", "Pd", "Pt"}
 
-# === Créer le dossier de sortie ===
+# === Create output directory ===
 os.makedirs(output_dir, exist_ok=True)
 
-# === Supprimer le fichier de sortie s'il existe déjà ===
+# === Delete output file if it already exists ===
 if os.path.exists(output_csv_file):
     os.remove(output_csv_file)
-    print(f"🧹 Ancien fichier supprimé : {output_csv_file}")
+    print(f"🧹 Old file deleted: {output_csv_file}")
 
-# === Initialiser le nouveau fichier CSV avec en-tête ===
+# === Initialize new CSV file with header ===
 with open(output_csv_file, "w", newline='') as f:
     writer = csv.writer(f)
     writer.writerow(["smiles"])
 
-# === Fonction : nettoyer et filtrer une molécule ===
-def nettoyer_et_filtrer(smi):
+# === Function: clean and filter a molecule ===
+def clean_and_filter(smi):
     mol = Chem.MolFromSmiles(smi)
     if mol is None:
         return None
 
-    # Supprimer les métaux
+    # Remove metals
     rw_mol = RWMol(mol)
-    indices = [atom.GetIdx() for atom in rw_mol.GetAtoms() if atom.GetSymbol() in metaux_a_supprimer]
+    indices = [atom.GetIdx() for atom in rw_mol.GetAtoms() if atom.GetSymbol() in metals_to_remove]
     for idx in sorted(indices, reverse=True):
         rw_mol.RemoveAtom(idx)
     mol = rw_mol.GetMol()
 
-    # Vérifier la validité
+    # Check validity
     try:
         Chem.SanitizeMol(mol)
     except:
         return None
 
-    # Recalculer descripteurs
+    # Recompute descriptors
     mw = Descriptors.MolWt(mol)
     atom_counts = {}
     for atom in mol.GetAtoms():
@@ -59,8 +59,8 @@ def nettoyer_et_filtrer(smi):
         return Chem.MolToSmiles(mol)
     return None
 
-# === Partie 1 : Dataset Hugging Face ===
-print(f"\n📡 Traitement du dataset : {datasets_to_use[0][0]}")
+# === Part 1: Hugging Face dataset ===
+print(f"\n📡 Processing dataset: {datasets_to_use[0][0]}")
 ds = load_dataset(datasets_to_use[0][0], split="train", streaming=True)
 
 total_hf = 0
@@ -68,15 +68,15 @@ with open(output_csv_file, "a", newline='') as f:
     writer = csv.writer(f)
     for row in ds:
         raw_smi = row.get(datasets_to_use[0][1], "").strip()
-        cleaned_smi = nettoyer_et_filtrer(raw_smi)
+        cleaned_smi = clean_and_filter(raw_smi)
         if cleaned_smi:
             writer.writerow([cleaned_smi])
             total_hf += 1
 
-print(f"✅ {total_hf} SMILES écrits depuis Hugging Face")
+print(f"✅ {total_hf} SMILES written from Hugging Face")
 
-# === Partie 2 : Fichier local Cross_Coupling_Smiles.csv ===
-print(f"\n📂 Traitement du fichier local : {input_csv_file}")
+# === Part 2: Local file Cross_Coupling_Smiles.csv ===
+print(f"\n📂 Processing local file: {input_csv_file}")
 total_local = 0
 
 if os.path.exists(input_csv_file):
@@ -85,15 +85,16 @@ if os.path.exists(input_csv_file):
         writer = csv.writer(f_out)
         for row in reader:
             raw_smi = row.get("SMILES", "").strip()
-            cleaned_smi = nettoyer_et_filtrer(raw_smi)
+            cleaned_smi = clean_and_filter(raw_smi)
             if cleaned_smi:
                 writer.writerow([cleaned_smi])
                 total_local += 1
-    print(f"✅ {total_local} SMILES ajoutés depuis Cross_Coupling_Smiles.csv")
+    print(f"✅ {total_local} SMILES added from Cross_Coupling_Smiles.csv")
 else:
-    print(f"⚠️ Fichier non trouvé : {input_csv_file}")
+    print(f"⚠️ File not found: {input_csv_file}")
 
-# === Résumé final ===
-print(f"\n🎉 Total combiné : {total_hf + total_local} molécules filtrées et nettoyées")
+# === Final summary ===
+print(f"\n🎉 Combined total: {total_hf + total_local} molecules filtered and cleaned")
+
 
 
