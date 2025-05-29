@@ -10,32 +10,34 @@ import openbabel
 output_dir = "data_smiles"
 output_csv_file = os.path.join(output_dir, "filtered_smiles_similar.csv")
 huggingface_dataset = ("antoinebcx/smiles-molecules-chembl", "smiles")
-metaux_a_supprimer = {"Ag", "Cu", "Au", "Ni", "Pd", "Pt"}
+metals_to_remove = {"Ag", "Cu", "Au", "Ni", "Pd", "Pt"}
 
-# === 4 dossiers contenant les fichiers .xyz ===
+# === 4 folders containing .xyz files ===
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
 xyz_root_paths = [
-    os.path.join("main_file", "data", "data_on_ruthenium", "structures_all", "structures_1", "All2Lig"),
-    os.path.join("main_file", "data", "data_on_ruthenium", "structures_all", "structures_1", "All4Lig"),
-    os.path.join("main_file", "data", "data_on_ruthenium", "structures_all2", "structures_2", "All2Lig"),
-    os.path.join("main_file", "data", "data_on_ruthenium", "structures_all2", "structures_2", "All4Lig"),
+    os.path.join(script_dir, "data_smiles", "structures_all", "structures_1", "All2Lig"),
+    os.path.join(script_dir, "data_smiles", "structures_all", "structures_1", "All4Lig"),
+    os.path.join(script_dir, "data_smiles", "structures_all2", "structures_2", "All2Lig"),
+    os.path.join(script_dir, "data_smiles", "structures_all2", "structures_2", "All4Lig"),
 ]
 
-# === Préparation dossier de sortie ===
+# === Prepare output folder ===
 os.makedirs(output_dir, exist_ok=True)
 if os.path.exists(output_csv_file):
     os.remove(output_csv_file)
-    print(f"🧹 Ancien fichier supprimé : {output_csv_file}")
+    print(f"🧹 Old file deleted: {output_csv_file}")
 
-# === Réduction des logs Open Babel ===
+# === Reduce Open Babel logs ===
 openbabel.obErrorLog.SetOutputLevel(0)
 
-# === Fonction de nettoyage / filtrage ===
-def nettoyer_et_filtrer(mol):
+# === Cleaning / filtering function ===
+def clean_and_filter(mol):
     if mol is None:
         return None
     try:
         rw_mol = RWMol(mol)
-        indices = [a.GetIdx() for a in rw_mol.GetAtoms() if a.GetSymbol() in metaux_a_supprimer]
+        indices = [a.GetIdx() for a in rw_mol.GetAtoms() if a.GetSymbol() in metals_to_remove]
         for idx in sorted(indices, reverse=True):
             rw_mol.RemoveAtom(idx)
         mol = rw_mol.GetMol()
@@ -53,31 +55,31 @@ def nettoyer_et_filtrer(mol):
         return Chem.MolToSmiles(mol)
     return None
 
-# === COLLECTION DES SMILES UNIQUES ===
-smiles_uniques = set()
+# === COLLECT UNIQUE SMILES ===
+unique_smiles = set()
 total_xyz = 0
 total_hf = 0
 
-# === 📡 Partie Hugging Face ===
-print(f"\n📡 Streaming depuis Hugging Face : {huggingface_dataset[0]}")
+# === 📡 Hugging Face dataset ===
+print(f"\n📡 Streaming from Hugging Face: {huggingface_dataset[0]}")
 ds = load_dataset(huggingface_dataset[0], split="train", streaming=True)
 
 for row in ds:
     smi = row.get(huggingface_dataset[1], "").strip()
     mol = Chem.MolFromSmiles(smi)
-    cleaned = nettoyer_et_filtrer(mol)
-    if cleaned and cleaned not in smiles_uniques:
-        smiles_uniques.add(cleaned)
+    cleaned = clean_and_filter(mol)
+    if cleaned and cleaned not in unique_smiles:
+        unique_smiles.add(cleaned)
         total_hf += 1
 
-print(f"✅ {total_hf} SMILES ajoutés depuis Hugging Face")
+print(f"✅ {total_hf} SMILES added from Hugging Face")
 
-# === 📂 Partie .xyz ===
-print(f"\n📂 Analyse des fichiers .xyz :")
+# === 📂 Process .xyz files ===
+print(f"\n📂 Processing .xyz files:")
 for path in xyz_root_paths:
-    print(f"🔍 Dossier : {path}")
+    print(f"🔍 Folder: {path}")
     if not os.path.exists(path):
-        print(f"⛔ Dossier introuvable : {path}")
+        print(f"⛔ Folder not found: {path}")
         continue
 
     for dirpath, _, files in os.walk(path):
@@ -90,26 +92,27 @@ for path in xyz_root_paths:
                 mol = next(pybel.readfile("xyz", file_path))
                 smi_raw = mol.write("smi").strip()
                 if not smi_raw:
-                    raise ValueError("SMILES vide (conversion échouée)")
+                    raise ValueError("Empty SMILES (conversion failed)")
                 smi = smi_raw.split()[0]
                 rdkit_mol = Chem.MolFromSmiles(smi)
-                cleaned = nettoyer_et_filtrer(rdkit_mol)
+                cleaned = clean_and_filter(rdkit_mol)
 
-                if cleaned and cleaned not in smiles_uniques:
-                    smiles_uniques.add(cleaned)
+                if cleaned and cleaned not in unique_smiles:
+                    unique_smiles.add(cleaned)
                     total_xyz += 1
             except Exception as e:
-                print(f"⚠️ Échec conversion : {file_path} → {e}")
+                print(f"⚠️ Conversion failed: {file_path} → {e}")
 
-# === ÉCRITURE FINALE ===
+# === FINAL WRITE ===
 with open(output_csv_file, "w", newline='') as f:
     writer = csv.writer(f)
     writer.writerow(["smiles"])
-    for smi in sorted(smiles_uniques):
+    for smi in sorted(unique_smiles):
         writer.writerow([smi])
 
-print(f"\n✅ Terminé : {len(smiles_uniques)} SMILES uniques écrits dans '{output_csv_file}'")
-print(f"🔹 Dont {total_hf} depuis Hugging Face, {total_xyz} depuis les fichiers .xyz")
+print(f"\n✅ Done: {len(unique_smiles)} unique SMILES written to '{output_csv_file}'")
+print(f"🔹 Including {total_hf} from Hugging Face, {total_xyz} from .xyz files")
+
 
 
 
