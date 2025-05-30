@@ -14,19 +14,14 @@ from transformers import (
 
 # ----------- arguments CLI --------------------------------------
 parser = argparse.ArgumentParser()
-parser.add_argument("--dataset_dir", required=True,
-                    help="Dossier qui contient le sous-dossier test/ sauvegardé par datasets.save_to_disk()")
-parser.add_argument("--model_dir", required=True,
-                    help="Dossier du modèle pré-entraîné (config, tokenizer, poids)")
-parser.add_argument("--batch_size", type=int, default=8,
-                    help="Taille de batch pour l’évaluation")
-parser.add_argument("--output_dir", default="output/test_eval",
-                    help="Où écrire les logs locaux (pas le modèle)")
-parser.add_argument("--wandb_project", default=None,
-                    help="Nom de projet W&B si tu veux logger (laisser vide pour désactiver)")
+parser.add_argument("--dataset_dir", required=True, help="File that contain the under folder test")
+parser.add_argument("--model_dir", required=True, help="File of the pre-trained model")
+parser.add_argument("--batch_size", type=int, default=8, help="Batch size for evaluation")
+parser.add_argument("--output_dir", default="output/test_eval", help="Where to write local logs")
+parser.add_argument("--wandb_project", default=None, help="If you want to log to W&B")
 args = parser.parse_args()
 
-# ----------- chargement modèle + tokenizer ----------------------
+# ----------- Loading of the model + tokenizer ----------------------
 print("🔹 Loading model & tokenizer…")
 tokenizer = RobertaTokenizerFast.from_pretrained(args.model_dir)
 model = RobertaForMaskedLM.from_pretrained(args.model_dir)
@@ -39,29 +34,29 @@ device = torch.device(
 model.to(device)
 print("✅ Model on", device)
 
-# ----------- chargement dataset test ----------------------------
+# ----------- loading dataset test ----------------------------
 test_path = os.path.join(args.dataset_dir, "test")
 print(f"🔹 Loading test set from {test_path} …")
 ds_test = load_from_disk(test_path)
 print(f"✅ Test set size : {len(ds_test)}")
 
-# ----------- data_output_pretraining collator avec masquage dynamique --------------
+# ----------- data_output_pretraining collator with dynamic masking --------------
 data_collator = DataCollatorForLanguageModeling(
     tokenizer=tokenizer,
     mlm=True,
     mlm_probability=0.15,
 )
 
-# ----------- TrainingArguments (éval uniquement) ----------------
+# ----------- TrainingArguments (for evaluation only) ----------------
 eval_args = TrainingArguments(
     output_dir=args.output_dir,
     per_device_eval_batch_size=args.batch_size,
     do_train=False,
     do_eval=True,
-    report_to="none",  # tu peux mettre "wandb" ici si tu veux logguer
+    report_to="wandb",
 )
 
-# ----------- Trainer et évaluation ------------------------------
+# ----------- Trainer and evaluation ------------------------------
 trainer = Trainer(
     model=model,
     args=eval_args,
@@ -74,7 +69,7 @@ metrics = trainer.evaluate(eval_dataset=ds_test)
 
 eval_loss = metrics.get("eval_loss")
 if eval_loss is None:
-    print("⚠️  eval_loss manquante ; vérifie que 'labels' est bien présent.")
+    print("debugging: eval_loss missing")
 else:
     perplexity = math.exp(eval_loss) if eval_loss < 100 else float("inf")
     metrics["perplexity"] = perplexity

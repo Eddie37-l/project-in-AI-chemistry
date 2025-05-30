@@ -5,15 +5,15 @@ from tqdm import tqdm
 import numpy as np
 
 # --------------------------
-# ⚙️ Configuration
+# Configuration
 # --------------------------
-MODEL = "seyonec/ChemBERTa-zinc-base-v1"  # <- ton modèle pré-entraîné
-CSV_INPUT_PATH = "../data/dara_for_pretraining/data_hydrogenation_tokenized_2.csv"  # <- ton fichier d'entrée
-CSV_OUTPUT_PATH = "data_output_pretraining/embeddings_output_modelbrut.csv"  # <- fichier de sortie
+MODEL = "seyonec/ChemBERTa-zinc-base-v1"
+CSV_INPUT_PATH = "../data/dara_for_pretraining/data_hydrogenation_tokenized_2.csv"
+CSV_OUTPUT_PATH = "data_output_pretraining/embeddings_output_modelbrut.csv"
 USE_CUDA = torch.cuda.is_available()
 
 # --------------------------
-# 🔹 Load model/tokenizer
+# Load model/tokenizer
 # --------------------------
 tokenizer = RobertaTokenizerFast.from_pretrained(MODEL)
 model = RobertaModel.from_pretrained(MODEL)
@@ -22,12 +22,12 @@ if USE_CUDA:
     model.cuda()
 
 # --------------------------
-# 🔹 Load the CSV file
+# Load the CSV file
 # --------------------------
 df = pd.read_csv(CSV_INPUT_PATH)
 
 # --------------------------
-# 🔹 Embedding function
+# Embedding function
 # --------------------------
 def get_embedding(text):
     inputs = tokenizer(text, return_tensors="pt", padding=True, truncation=True)
@@ -39,7 +39,7 @@ def get_embedding(text):
     return cls_embedding  # shape: (768,)
 
 # --------------------------
-# 🔹 Extract embeddings for ligand and substrate separately
+# Extract embeddings for ligand and substrate separately
 # --------------------------
 embeddings = []
 
@@ -50,14 +50,14 @@ for idx, row in tqdm(df.iterrows(), total=len(df), desc="🔄 Extraction embeddi
     embeddings.append(combined_emb)
 
 # --------------------------
-# 🔹 Convert to DataFrame
+# Convert to DataFrame
 # --------------------------
 emb_df = pd.DataFrame(embeddings, columns=[f"emb_{i}" for i in range(1536)])
 emb_df["Entry"] = df["Entry"]
 emb_df["Yield"] = df["Yield"]
 
 # --------------------------
-# 🔹 Save to CSV
+# Save to CSV
 # --------------------------
 emb_df.to_csv(CSV_OUTPUT_PATH, index=False)
-print(f"✅ Embeddings 1536 dimensions exportés vers : {CSV_OUTPUT_PATH}")
+print(f"✅ Embeddings 1536 dimensions exported into : {CSV_OUTPUT_PATH}")

@@ -9,8 +9,8 @@ from datasets import load_from_disk, DatasetDict
 # ----------------------------
 parser = argparse.ArgumentParser()
 parser.add_argument("--dataset_dir", type=str, required=True, help="datasets 'train' and 'val'")
-parser.add_argument("--output_dir", type=str, default="output/chemberta-mlm3", help="results' output")
-parser.add_argument("--save_dir", type=str, default="models/chemberta-mlm-custom-1-3", help="where to save the model")
+parser.add_argument("--output_dir", type=str, default="../output/chemberta-mlm3", help="results' output")
+parser.add_argument("--save_dir", type=str, default="../models/chemberta-mlm-custom-1-3", help="where to save the model")
 parser.add_argument("--batch_size", type=int, default=32, help="batch size")
 parser.add_argument("--epochs", type=int, default=5, help="epochs number")
 parser.add_argument("--save_steps", type=int, default=500, help="checkpoint/save frequency in steps")
@@ -21,10 +21,10 @@ args = parser.parse_args()
 # ----------------------------
 # Init WandB
 # ----------------------------
-wandb.init(project="chemberta-pretraining3", name="ChemBERTa MLM Custom3")
+wandb.init(project="chemberta-pretraining-3", name="ChemBERTa MLM Custom3")
 
 # ----------------------------
-# Load tokenizer and model
+# Load tokenizer and model (we are using ChemBERTa-ZINC)
 # ----------------------------
 print("🔹 loading tokenizer/model...")
 tokenizer = RobertaTokenizerFast.from_pretrained("seyonec/ChemBERTa-zinc-base-v1")
