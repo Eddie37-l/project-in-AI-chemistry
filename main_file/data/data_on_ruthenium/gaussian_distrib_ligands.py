@@ -9,7 +9,7 @@ import os
 
 # === 1. Locate and load the CSV file ===
 script_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(script_dir, "..", "..", "..", "data_smiles", "Ligand_candidates.csv")
+file_path = os.path.join(script_dir, "..", "..", "..", "data_smiles", "ligand_candidates.csv")
 file_path = os.path.normpath(file_path)
 
 
@@ -28,7 +28,7 @@ def calc_mol_weight(smiles):
 
 df['Molecular_Weight'] = df['Ligand_SMILES'].apply(calc_mol_weight)
 
-# === 3. Clean the data (remove rows with SMILES parsing errors) ===
+# === 3. Clean the data_output_pretraining (remove rows with SMILES parsing errors) ===
 df_clean = df.dropna(subset=['Molecular_Weight'])
 
 # === 4. Compute KDE (Gaussian Kernel Density Estimate) ===

@@ -8,7 +8,7 @@ import csv
 datasets_to_use = [("antoinebcx/smiles-molecules-chembl", "smiles")]
 output_dir = "data_smiles"
 output_csv_file = os.path.join(output_dir, "filtered_smiles_similar.csv")
-input_csv_file = os.path.join(output_dir, "Cross_Coupling_Smiles.csv")
+input_csv_file = os.path.join(output_dir, "cross_coupling_smiles.csv")
 
 metals_to_remove = {"Ag", "Cu", "Au", "Ni", "Pd", "Pt"}
 
@@ -75,7 +75,7 @@ with open(output_csv_file, "a", newline='') as f:
 
 print(f"✅ {total_hf} SMILES written from Hugging Face")
 
-# === Part 2: Local file Cross_Coupling_Smiles.csv ===
+# === Part 2: Local file cross_coupling_smiles.csv ===
 print(f"\n📂 Processing local file: {input_csv_file}")
 total_local = 0
 
@@ -89,7 +89,7 @@ if os.path.exists(input_csv_file):
             if cleaned_smi:
                 writer.writerow([cleaned_smi])
                 total_local += 1
-    print(f"✅ {total_local} SMILES added from Cross_Coupling_Smiles.csv")
+    print(f"✅ {total_local} SMILES added from cross_coupling_smiles.csv")
 else:
     print(f"⚠️ File not found: {input_csv_file}")
 

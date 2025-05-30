@@ -45,7 +45,7 @@ print(f"🔹 Loading test set from {test_path} …")
 ds_test = load_from_disk(test_path)
 print(f"✅ Test set size : {len(ds_test)}")
 
-# ----------- data collator avec masquage dynamique --------------
+# ----------- data_output_pretraining collator avec masquage dynamique --------------
 data_collator = DataCollatorForLanguageModeling(
     tokenizer=tokenizer,
     mlm=True,
