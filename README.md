@@ -21,7 +21,7 @@ This project explores the use of a ChemBERTa-based model, called **RuBERT**, to 
 ---
 
 ###⚠️ MODIFIER FEATURES SI NECESSAIRE
-## 📊 Key Features
+## Key Features 📊
 
 -  **ChemBERTa-based model (RuBERT)** for predicting yields in Ru-catalyzed hydrogenation reactions
 -  **Custom SMILES filtering** based on molecular weight of 30 phosphine ligands, atom content (P & N), and absence of metals
@@ -29,12 +29,10 @@ This project explores the use of a ChemBERTa-based model, called **RuBERT**, to 
 
 ---
 
-## 🚀 How to Run
+## How to Run 🚀
 ###⚠️ MODIFIER HOW TO RUN ET REQUIREMENTS
 
-
----
-### ✅ Requirements
+### Requirements ✅
 
 Make sure you have Python 3.10 and install dependencies:
 
@@ -45,7 +43,7 @@ pip install -r requirements.txt
 ```
 ---
 
-## 📁 Project Structure
+## Project Structure 📁
 
 - `main_file/`: Core scripts for model training, data filtering, and tokenization
 - `data_smiles/`: Contains ligand SMILES and filtered datasets
@@ -53,7 +51,7 @@ pip install -r requirements.txt
 
 ---
 
-## 📦 Dataset Sources
+## Dataset Sources 📦
 
 - **Hugging Face**: [`antoinebcx/smiles-molecules-chembl`](https://huggingface.co/datasets/antoinebcx/smiles-molecules-chembl)
 - **Local**: `data_smiles/Cross_Coupling_Smiles.csv`, `.xyz` ligand files from `structures_all/`, `structures_all2/`
@@ -61,7 +59,7 @@ pip install -r requirements.txt
 
 ---
 
-## ✍️ Contributors
+## Contributors ✍️
 
 ###⚠️ MODIFIER PARTIE THOMAS ET EDDIE 
 - Thomas Cohen - Pre-training, Package Infrastructure
@@ -69,7 +67,7 @@ pip install -r requirements.txt
 - Edward Von Doderer - 
 
 ---
-## 📄 License
+## License 📄
 
 This project is licensed under the MIT License.
 You are free to use, modify, and distribute this software with appropriate attribution.
