@@ -5,8 +5,8 @@ import os
 # charging of tokenizer ChemBERTa
 tokenizer = RobertaTokenizerFast.from_pretrained("seyonec/ChemBERTa-zinc-base-v1")
 
-# Charging data
-dataset = load_dataset("text", data_files={"train": "data/filtred_ligands_raw.txt"})["train"]
+# Charging data_output_pretraining
+dataset = load_dataset("text", data_files={"train": "data_output_pretraining/filtred_ligands_raw.txt"})["train"]
 
 # Split 80% train, 10% val, 10% test
 dataset_split = dataset.train_test_split(test_size=0.2)  # 80% train, 20% test
@@ -33,8 +33,8 @@ tokenized_val_dataset = val_dataset.map(tokenize_function, batched=True, remove_
 tokenized_test_dataset = test_dataset.map(tokenize_function, batched=True, remove_columns=["text"])
 
 # Save each tokenized set
-tokenized_train_dataset.save_to_disk("data/tok_lig_pretraining3/train")
-tokenized_val_dataset.save_to_disk("data/tok_lig_pretraining3/val")
-tokenized_test_dataset.save_to_disk("data/tok_lig_pretraining3/test")
+tokenized_train_dataset.save_to_disk("data_output_pretraining/tok_lig_pretraining3/train")
+tokenized_val_dataset.save_to_disk("data_output_pretraining/tok_lig_pretraining3/val")
+tokenized_test_dataset.save_to_disk("data_output_pretraining/tok_lig_pretraining3/test")
 
 print("Dataset tokenized and saved.")
