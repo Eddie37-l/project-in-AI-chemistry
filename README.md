@@ -1,5 +1,7 @@
-# RuBERT: Yield Prediction with ChemBERTa for Ruthenium-Catalyzed Hydrogenation of carbonyl compounds
-![Uploading ChatGPT Image 30 mai 2025, 21_49_58.png…]()
+![RuBERT](https://github.com/Eddie37-l/project-in-AI-chemistry/blob/main/banner.png?raw=true)
+
+# 🤖RuBERT: Yield Prediction with ChemBERTa for Ruthenium-Catalyzed Hydrogenation of carbonyl compounds
+
 
 This project explores the use of a ChemBERTa-based model, called **RuBERT**, to predict reaction yields in **ruthenium-catalyzed hydrogenation** of carbonyl compounds. It combines machine learning on chemical SMILES and experimental data from literature.
 
@@ -69,7 +71,9 @@ pip install -r requirements.txt
 ## 📄 License
 
 This project is licensed under the MIT License.
+
 You are free to use, modify, and distribute this software with appropriate attribution.
+
 See the [LICENSE](LICENSE) file for details.
 
 
