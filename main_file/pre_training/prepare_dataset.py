@@ -1,7 +1,7 @@
 import pandas as pd
 
 # charge the database with the SMILES
-df = pd.read_csv("../../data_smiles/filtered_smiles_similar.csv")
+df = pd.read_csv("../data/dara_for_pretraining/filtered_smiles_similar.csv")
 
 # keep only the ligand column
 ligands = df['smiles'].dropna()
