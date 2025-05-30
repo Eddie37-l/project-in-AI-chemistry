@@ -14,26 +14,26 @@ This project explores the use of a ChemBERTa-based model, called **RuBERT**, to 
 - [Requirements](requirements)
 - [Project Structure](project-structure)
 - [Dataset Sources](#dataset-sources)
-- [Installation](#installation)
-- [How to Run](#how-to-run)
-- [Authors](#authors)
+- [Contributors](#contributors)
+- [Licence](#licence)
+  
 
 ---
 
 ###⚠️ MODIFIER FEATURES SI NECESSAIRE
 ## 📊 Key Features
 
-- ✅ **ChemBERTa-based model (RuBERT)** for predicting yields in Ru-catalyzed hydrogenation reactions
-- ✅ **Custom SMILES filtering** based on molecular weight of 30 phosphine ligands, atom content (P & N), and absence of metals
-- ✅ **Visualization tools** for ligand distribution (KDE-based selection)
-- ✅ **Modular scripts** for preprocessing, model training, and ligand analysis
-- ✅ **Integration of multiple data sources**: Hugging Face datasets + MPCD + Cross-coupling datasets (Schwaller, 2023)
+-  **ChemBERTa-based model (RuBERT)** for predicting yields in Ru-catalyzed hydrogenation reactions
+-  **Custom SMILES filtering** based on molecular weight of 30 phosphine ligands, atom content (P & N), and absence of metals
+-  **Modular scripts** for preprocessing, model training, and ligand analysis
 
 ---
 
 ## 🚀 How to Run
 ###⚠️ MODIFIER HOW TO RUN ET REQUIREMENTS
 
+
+---
 ### ✅ Requirements
 
 Make sure you have Python 3.10 and install dependencies:
@@ -51,6 +51,7 @@ pip install -r requirements.txt
 - `data_smiles/`: Contains ligand SMILES and filtered datasets
 - `README.md`: This file
 
+---
 
 ## 📦 Dataset Sources
 
@@ -71,9 +72,7 @@ pip install -r requirements.txt
 ## 📄 License
 
 This project is licensed under the MIT License.
-
 You are free to use, modify, and distribute this software with appropriate attribution.
-
 See the [LICENSE](LICENSE) file for details.
 
 
