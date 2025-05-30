@@ -1,4 +1,4 @@
-![RuBERT](https://github.com/Eddie37-l/project-in-AI-chemistry/blob/main/banner.png?raw=true)
+![RuBERT](https://github.com/Eddie37-l/project-in-AI-chemistry/blob/main/banner_RuBERT.png?raw=true)
 
 # 🤖RuBERT: Yield Prediction with ChemBERTa for Ruthenium-Catalyzed Hydrogenation of carbonyl compounds
 
