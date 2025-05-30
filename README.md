@@ -9,13 +9,13 @@ This project explores the use of a ChemBERTa-based model, called **RuBERT**, to 
 ---
 ## 📚 Table of Contents
 
-- [Key Features](#key-features)
-- [How to Run](how-to-run)
-- [Requirements](requirements)
-- [Project Structure](project-structure)
-- [Dataset Sources](#dataset-sources)
-- [Contributors](#contributors)
-- [Licence](#licence)
+- [Key Features](#key-features-)
+- [How to Run](how-to-run-)
+- [Requirements](requirements-)
+- [Project Structure](project-structure-)
+- [Dataset Sources](#dataset-sources-)
+- [Contributors](#contributors-)
+- [Licence](#licence-)
   
 
 ---
@@ -23,9 +23,9 @@ This project explores the use of a ChemBERTa-based model, called **RuBERT**, to 
 ###⚠️ MODIFIER FEATURES SI NECESSAIRE
 ## Key Features 📊
 
--  **ChemBERTa-based model (RuBERT)** for predicting yields in Ru-catalyzed hydrogenation reactions
--  **Custom SMILES filtering** based on molecular weight of 30 phosphine ligands, atom content (P & N), and absence of metals
--  **Modular scripts** for preprocessing, model training, and ligand analysis
+- **RuBERT, a ChemBERTa-based model**: Predicts reaction yields in ruthenium-catalyzed hydrogenation of carbonyl compounds.
+- **Smart SMILES filtering**: Automatically selects ligands based on molecular weight, presence of phosphorus and nitrogen atoms, and absence of metals.
+- **Modular and reusable scripts**: For data preprocessing, ligand analysis, and model training — easily adaptable for other reaction datasets.
 
 ---
 
