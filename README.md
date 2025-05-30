@@ -57,9 +57,12 @@ pip install -r requirements.txt
 
 ## Dataset Sources 
 
-- 💻 **Hugging Face**: Extracted from [`antoinebcx/smiles-molecules-chembl`](https://huggingface.co/datasets/antoinebcx/smiles-molecules-chembl)
+- 💻 **Hugging Face**: Extracted from [`antoinebcx/smiles-molecules-chembl`](https://huggingface.co/datasets/antoinebcx/smiles-molecules-chembl)  
+
 - 📁 **Cross-coupling Ligands**: `data_smiles/Cross_Coupling_Smiles.csv`, `.xyz` ligand files from `structures_all/`, `structures_all2/` extracted from [this study](https://doi.org/10.1039/D3DD00011C) by Schwaller *et al.*
+
 - 📊 **Original Phosphine Ligands**: based on molecular weight distributions derived from `Ligand_candidates.csv` extracted from [this study](https://doi.org/10.1038/s41467-022-30718-x) by Nakajima *et al.*
+
 - 🗒️ **MPCD**: `data_smiles/smiles.txt` extracted from MPCD
 
 ---
