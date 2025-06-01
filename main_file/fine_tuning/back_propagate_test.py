@@ -9,7 +9,7 @@ import numpy as np
 import random
 import json
 
-
+#This model will back propogate the loss throug
 # ── 1) Improved SoftDecisionTree ──
 class SoftDecisionTree(nn.Module):
     def __init__(self, input_dim: int, depth: int):
