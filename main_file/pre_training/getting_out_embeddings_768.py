@@ -4,7 +4,7 @@ from transformers import RobertaTokenizerFast, RobertaModel
 from tqdm import tqdm
 
 # --------------------------
-# Configuration
+# This model converts our token to a singular vector giving us a singular embedding vector at the end.
 # --------------------------
 MODEL_PATH = "../models/chemberta-mlm-custom-3"
 CSV_INPUT_PATH = "../data/dara_for_pretraining/data_hydrogenation_tokenized_2.csv"

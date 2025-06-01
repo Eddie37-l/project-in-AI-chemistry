@@ -1,6 +1,9 @@
 import os
 import pandas as pd
+"""
+    Simple function to remove entries from the csv files
 
+    """
 # ─── EDIT THIS: put your CSV filename (in the same folder as this script) ───
 INPUT_FILE = "tokens_77M_with_entry.csv"  # ← replace with your actual CSV filename
 

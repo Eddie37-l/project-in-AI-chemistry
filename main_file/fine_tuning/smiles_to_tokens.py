@@ -1,6 +1,10 @@
 import pandas as pd
 from transformers import AutoTokenizer
+"""
+    converts the smiles to tokens with a given length and there attention vector
+    was used to create the data for the final fine tuning 
 
+    """
 model_name = "chemberta-mlm-custom-3" #choose your model here for your wanted tokenizer
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 

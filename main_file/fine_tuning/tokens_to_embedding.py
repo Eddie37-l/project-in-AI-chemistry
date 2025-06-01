@@ -3,7 +3,11 @@ import torch
 import pandas as pd
 from tqdm.auto import tqdm
 from transformers import AutoModel
+"""
+    converts tokens to 2 embeddings, was used to create the data for 
+    the fine tuning 
 
+    """
 # Configuration
 MODEL_NAME    = "chemberta-mlm-custom-3" #choose your model here
 OUTPUT_DIR    = "embeddings_output"

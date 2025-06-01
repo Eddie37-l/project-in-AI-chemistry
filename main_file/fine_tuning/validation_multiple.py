@@ -6,7 +6,9 @@ import pandas as pd
 import ydf
 
 """
-    These 2 functions will are used to "validate" the data 
+    These 2 functions will are used to "validate" the data, the first is the 
+    random 70/30 split with a given seed, and second perimits to iterate 
+    through multiple random seeds.
 
     """
 def validation_function(Data, X_range, splits, model_type,d):
