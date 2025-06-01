@@ -168,7 +168,7 @@ def train_model():
     print(f"Using device: {device}")
 
     # Load data
-    df = pd.read_csv("data_eddie/embeddings_PRETRAINED.csv")
+    df = pd.read_csv("../../final_folder_eddie/data_eddie/embeddings_PRETRAINED.csv")
     print(f"Loaded dataset with {len(df)} samples")
     print(f"Yield range: {df['Yield'].min():.2f} - {df['Yield'].max():.2f}")
 
