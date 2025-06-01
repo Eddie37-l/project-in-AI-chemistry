@@ -9,7 +9,8 @@ import numpy as np
 import random
 import json
 
-#This model will back propogate the loss throug
+#This model will back propogate the loss through the random forests and the bert model updating it's weights.
+
 # ── 1) Improved SoftDecisionTree ──
 class SoftDecisionTree(nn.Module):
     def __init__(self, input_dim: int, depth: int):
