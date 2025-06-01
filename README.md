@@ -20,7 +20,6 @@ This project explores the use of a ChemBERTa-based model, called **RuBERT**, to 
 
 ---
 
-###⚠️ MODIFIER FEATURES SI NECESSAIRE
 ## Features 
 
 - 🤖 **RuBERT, a ChemBERTa-based model**:  
@@ -50,8 +49,11 @@ pip install -r requirements.txt
 
 ## Project Structure 
 
-- `main_file/`: Core scripts for model training, data filtering, and tokenization
-- `data_smiles/`: Contains ligand SMILES and filtered datasets
+- `main_file/`: Core scripts for model training, fine-tuning, data and data filtering
+  - `data/`: Contains all the SMILES data for pre-training and fine-tuning, as well as the script for data filtering
+  - `pre_training/`: Contains all the scripts needed to pre-train a ChemBERTa model, as well as the resulting outputs
+  - `fine_tuning/`: Contains scripts for fine-tuning the pre-trained model on the yield prediction task.
+  - `models/`: Contains three pre-trained models. Although Model 1 performs best, it suffers from data leakage. Model 3 is slightly better than Model 2 and is considered the most reliable.
 
 ---
 
