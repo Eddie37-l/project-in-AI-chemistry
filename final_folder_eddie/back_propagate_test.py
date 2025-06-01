@@ -6,6 +6,8 @@ from torch.optim import AdamW
 import pandas as pd
 from sklearn.model_selection import train_test_split
 import numpy as np
+import random
+import json
 
 
 # ── 1) Improved SoftDecisionTree ──
@@ -154,6 +156,14 @@ class EmbeddingDataset(Dataset):
 
 # ── 4) Training function ──
 def train_model():
+    # Save random states at start
+    np_state = np.random.get_state()
+    random_states = {
+        'python_random': random.getstate(),
+        'numpy_random': (np_state[0], np_state[1].tolist(), np_state[2], np_state[3], np_state[4]),
+        'torch_random': torch.get_rng_state().tolist()
+    }
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
 
@@ -255,6 +265,9 @@ def train_model():
             best_val_rmse = val_rmse
             patience_counter = 0
             torch.save(model.state_dict(), "best_simple_tree.pt")
+            # Save random states when we get best model
+            with open("best_values.json", "w") as f:
+                json.dump(random_states, f, indent=2)
         else:
             patience_counter += 1
 
@@ -263,6 +276,7 @@ def train_model():
             break
 
     print(f"Best validation RMSE: {best_val_rmse:.4f}")
+    print(f"Random states saved to: best_values.json")
     return best_val_rmse
 
 
