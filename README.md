@@ -10,7 +10,6 @@ This project explores the use of a ChemBERTa-based model, called **RuBERT**, to 
 ## 📚 Table of Contents
 
 - [🧠 Features](#features)
-- [🚀 How to Run](#how-to-run)
 - [🔧 Requirements](#requirements)
 - [🗂️ Project Structure](#project-structure)
 - [📦 Dataset Sources](#dataset-sources)
@@ -32,9 +31,6 @@ Automatically selects ligands based on molecular weight, presence of phosphorus 
 For data preprocessing, ligand analysis, and model training; easily adaptable for other reaction datasets.
 
 ---
-
-## How to Run 
-###⚠️ MODIFIER HOW TO RUN ET REQUIREMENTS
 
 ### Requirements 
 
