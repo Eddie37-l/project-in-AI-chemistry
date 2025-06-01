@@ -10,7 +10,8 @@ import random
 import json
 
 """This model will back propogate the loss through the random forests 
-    and the bert model updating it's weights.
+    and the bert model updating it's weights.The saved model does not work
+    but it returns the parameters at each run so you can recreate it.
     """
 # ── 1) Improved SoftDecisionTree ──
 class SoftDecisionTree(nn.Module):

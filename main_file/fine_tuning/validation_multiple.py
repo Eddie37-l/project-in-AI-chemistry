@@ -7,8 +7,9 @@ import ydf
 
 """
     These 2 functions will are used to "validate" the data, the first is the 
-    random 70/30 split with a given seed, and second perimits to iterate 
-    through multiple random seeds.
+    random 70/30 split with a given seed, and second permits you to iterate 
+    through multiple random seeds. Simply choose your model,data file and 
+    amount of iterations.
 
     """
 def validation_function(Data, X_range, splits, model_type,d):
