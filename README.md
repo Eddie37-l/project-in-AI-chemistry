@@ -30,7 +30,7 @@ Predicts reaction yields in ruthenium-catalyzed hydrogenation of carbonyl compou
 Automatically selects ligands based on molecular weight, presence of phosphorus and nitrogen atoms, and absence of metals.
 
 - 🛠️ **Modular and reusable scripts**:  
-For data preprocessing, ligand analysis, and model training — easily adaptable for other reaction datasets.
+For data preprocessing, ligand analysis, and model training; easily adaptable for other reaction datasets.
 
 ---
 
@@ -69,10 +69,9 @@ pip install -r requirements.txt
 
 ## Contributors 
 
-###⚠️ MODIFIER PARTIE THOMAS ET EDDIE 
 - 👨‍🔬 Thomas Cohen - Pre-training, Package Infrastructure
 - 🧾 William Pellassy - Package Infrastructure, Dataset retrieval/filtering
-- 👨‍💻 Edward Von Doderer - 
+- 👨‍💻 Edward Von Doderer - Fine-tunning
 
 ---
 ## License 
